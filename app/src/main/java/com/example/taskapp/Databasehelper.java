@@ -52,15 +52,20 @@ public class Databasehelper extends SQLiteOpenHelper {
 
     public Cursor getId(String item){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT "+COL1+" FROM "+TABLE_NAME+" WHERE $COL2 = " +item;
+        String query = "SELECT "+COL1+" FROM "+TABLE_NAME+" WHERE " + COL2+ " = '" +item+ "'";
         Cursor data = db.rawQuery(query,null);
         return data;
     }
 
-    public void updatedata(String ITEM, int newischecked, int oldischecked, int id){
+    public void updatedata( int newischecked, int oldischecked, int id){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "UPDATE "+TABLE_NAME+" SET "+COL3+" = "+newischecked+" WHERE "+COL1+" = "+id+" AND "+COL2+" = "+ITEM;
+        String query = "UPDATE "+TABLE_NAME+" SET "+COL3+" = "+newischecked+" WHERE "+COL1+" = "+id;
         db.execSQL(query);
     }
 
+    public void deletedata(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM "+ TABLE_NAME+ " WHERE "+COL1+ " = "+id;
+        db.execSQL(query);
+    }
 }
