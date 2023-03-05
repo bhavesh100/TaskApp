@@ -36,17 +36,17 @@ public class Tasksadapter extends RecyclerView.Adapter<Tasksadapter.Viewholder>{
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                int itemId = 0;
-//                Cursor data = db.getId(cutodo.title);
-//                while (data.moveToNext()){
-//                    itemId = data.getInt(0);
-//                }
+                int itemId = 0;
+                Cursor data = db.getId(cutodo.title);
+                while (data.moveToNext()){
+                    itemId = data.getInt(0);
+                }
                 cutodo.ischecked = !cutodo.ischecked;
-//                if (cutodo.ischecked){
-//                    db.updatedata(cutodo.title,1,0,1);
-//                } else{
-//                    db.updatedata(cutodo.title,0,1,1);
-//                }
+                if (cutodo.ischecked){
+                    db.updatedata(1,0,itemId);
+                } else{
+                    db.updatedata(0,1,itemId);
+                }
 
             }
         });
@@ -66,6 +66,12 @@ public class Tasksadapter extends RecyclerView.Adapter<Tasksadapter.Viewholder>{
     public void removedata(){
         for (int i = 0; i < data.size(); i++) {
             if(data.get(i).ischecked){
+                int id = -1;
+                Cursor cursor = db.getId(data.get(i).title);
+                while (cursor.moveToNext()){
+                    id = cursor.getInt(0);
+                }
+                db.deletedata(id);
                 data.remove(i);
             }
         }
